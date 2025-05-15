@@ -10,3 +10,4 @@ This project demonstrates running a containerized Flask app using Docker Compose
 
 ## 📁 Project Structure
 
+# ec2docker
