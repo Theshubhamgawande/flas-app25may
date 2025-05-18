@@ -12,3 +12,4 @@ This project demonstrates running a containerized Flask app using Docker Compose
 
 # ec2docker
 # ec2docker
+# flask-redis-docker
