@@ -1,15 +1,20 @@
-version: "3.8"
+version: '3.8'
 
 services:
   web:
     build: .
     ports:
-      - "5001:5000"
-    env_file:
-      - .env
-    volumes:
-      - appdata:/data
+      - "5000:5000"
+    depends_on:
+      - redis
+    networks:
+      - app-network
 
-volumes:
-  appdata:
+  redis:
+    image: "redis:alpine"
+    networks:
+      - app-network
+
+networks:
+  app-network:
 

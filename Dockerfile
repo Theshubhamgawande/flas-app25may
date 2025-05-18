@@ -1,6 +1,13 @@
+# Dockerfile in the root (multi-container-app/)
+
 FROM python:3.10-slim
+
 WORKDIR /app
-COPY app /app
-RUN pip install flask
+
+COPY app/requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+
+COPY app/ .
+
 CMD ["python", "app.py"]
 
