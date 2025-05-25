@@ -7,7 +7,7 @@ pipeline {
     }
 
     environment {
-        IMAGE_NAME = "shubhamdoc15/yourimagename"
+        IMAGE_NAME = "shubhamdoc15/flask-redis-demo"
     }
 
     stages {
