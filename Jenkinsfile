@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         IMAGE_NAME = "shubhamdoc15/yourimagename"
-
     }
 
     stages {
