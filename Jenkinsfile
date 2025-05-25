@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'docker:20.10.24' // Docker CLI in Alpine
+            args '-v /var/run/docker.sock:/var/run/docker.sock' // mount host Docker socket
+        }
+    }
 
     environment {
         IMAGE_NAME = "shubhamdoc15/yourimagename"
@@ -9,6 +14,12 @@ pipeline {
         stage('Clone Repo') {
             steps {
                 checkout scm
+            }
+        }
+
+        stage('Check Docker Version') {
+            steps {
+                sh 'docker version'
             }
         }
 
@@ -30,3 +41,4 @@ pipeline {
         }
     }
 }
+
