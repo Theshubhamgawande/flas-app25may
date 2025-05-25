@@ -1,8 +1,8 @@
 pipeline {
     agent {
         docker {
-            image 'docker:20.10.24' // Docker CLI in Alpine
-            args '-v /var/run/docker.sock:/var/run/docker.sock' // mount host Docker socket
+            image 'docker:20.10.24-dind'  // Docker CLI + Daemon inside
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
 
@@ -11,20 +11,9 @@ pipeline {
     }
 
     stages {
-        stage('Clone Repo') {
-            steps {
-                checkout scm
-            }
-        }
-
-        stage('Check Docker Version') {
-            steps {
-                sh 'docker version'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
+                sh 'docker version'
                 sh 'docker build -t $IMAGE_NAME .'
             }
         }
@@ -32,13 +21,14 @@ pipeline {
         stage('Push to DockerHub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-                    sh """
+                    sh '''
                         echo "$PASS" | docker login -u "$USER" --password-stdin
                         docker push $IMAGE_NAME
-                    """
+                    '''
                 }
             }
         }
     }
 }
+
 
